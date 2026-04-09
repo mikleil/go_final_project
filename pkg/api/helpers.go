@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"go_final_project/pkg/db"
+	"log"
 	"net/http"
 	"time"
 )
@@ -62,5 +63,8 @@ func afterNow(now, t time.Time) bool {
 func writeJSONError(w http.ResponseWriter, message string, status int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	json.NewEncoder(w).Encode(map[string]string{"error": message})
+	if err := json.NewEncoder(w).Encode(map[string]string{"error": message}); err != nil {
+		log.Printf("[API_ERROR] encode failed: %v | message: %q | status: %d",
+			err, message, status)
+	}
 }

@@ -82,8 +82,7 @@ func taskDoneHandler(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get("id")
 	if id == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"error": "id parameter is required"})
+		writeJSONError(w, "id parameter is required", http.StatusBadRequest)
 		return
 	}
 
@@ -132,8 +131,7 @@ func taskDeleteHandler(w http.ResponseWriter, r *http.Request) {
 
 	id := r.URL.Query().Get("id")
 	if id == "" {
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(map[string]string{"error": "id parameter is required"})
+		writeJSONError(w, "id parameter is required", http.StatusBadRequest)
 		return
 	}
 

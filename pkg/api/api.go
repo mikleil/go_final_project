@@ -21,7 +21,9 @@ func taskHandler(w http.ResponseWriter, r *http.Request) {
 	case http.MethodPut:
 		updateTaskHandler(w, r)
 	case http.MethodDelete:
-		taskDeleteHandler(w, r) // делегируем удаление
-
+		taskDeleteHandler(w, r)
+	default:
+		w.Header().Set("Allow", "GET, POST, PUT, DELETE")
+		writeJSONError(w, "method not allowed", http.StatusMethodNotAllowed)
 	}
 }

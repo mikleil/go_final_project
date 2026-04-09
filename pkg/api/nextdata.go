@@ -18,7 +18,7 @@ func NextDate(now time.Time, dstart string, repeat string) (string, error) {
 
 	startDate, err := time.ParseInLocation(DateFormat, dstart, now.Location())
 	if err != nil {
-		return "", fmt.Errorf("некорректный формат даты старта: %v", err)
+		return "", fmt.Errorf("некорректный формат даты старта: %w", err)
 	}
 
 	loc := now.Location()
@@ -57,7 +57,7 @@ func NextDate(now time.Time, dstart string, repeat string) (string, error) {
 	case "w": // Дни недели
 		weekDays, err := parseIntList(parts[1:], 1, 7)
 		if err != nil {
-			return "", fmt.Errorf("неверный формат правила w: %v", err)
+			return "", fmt.Errorf("неверный формат правила w: %w", err)
 		}
 
 		validWeekdays := make(map[time.Weekday]bool)
@@ -88,14 +88,14 @@ func NextDate(now time.Time, dstart string, repeat string) (string, error) {
 
 		daysList, err := parseDayList(parts[1])
 		if err != nil {
-			return "", fmt.Errorf("ошибка дней в правиле m: %v", err)
+			return "", fmt.Errorf("ошибка дней в правиле m: %w", err)
 		}
 
 		monthsList := []int{}
 		if len(parts) >= 3 {
 			monthsList, err = parseIntList(strings.Split(parts[2], ","), 1, 12)
 			if err != nil {
-				return "", fmt.Errorf("ошибка месяцев в правиле m: %v", err)
+				return "", fmt.Errorf("ошибка месяцев в правиле m: %w", err)
 			}
 		}
 
